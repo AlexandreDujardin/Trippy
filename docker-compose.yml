@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:latest
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_DATABASE: process.env.MYSQL_DATABASE
+      MYSQL_USER: process.env.MYSQL_USER
+      MYSQL_PASSWORD: process.env.MYSQL_PASSWORD
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  node:
+    image: node:16
+    container_name: node
+    command: bash -c "yarn install && yarn dev"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/trippy_api
+    working_dir: /trippy_api
+    depends_on:
+      - db
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
