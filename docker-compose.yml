@@ -6,11 +6,12 @@ services:
     container_name: db
     restart: always
     environment:
-      MYSQL_DATABASE: process.env.MYSQL_DATABASE
-      MYSQL_USER: process.env.MYSQL_USER
-      MYSQL_PASSWORD: process.env.MYSQL_PASSWORD
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: trippy
+      MYSQL_USER: trippy
+      MYSQL_PASSWORD: drosIFMK3LFLdJb1
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
 
