@@ -12,6 +12,7 @@ app.use(bodyParser.json())
 
 app.use('/users', require('./routes/users'))
 
+
 app.get('/', (req, res) => {
   res.send('Mdrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
 })

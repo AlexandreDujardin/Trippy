@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {getUsers, createUser} = require ('../../controllers/users.controller')
+const {getUsers, getUserById, createUser} = require ('../../controllers/users.controller')
 
 
 router.route('/')
@@ -8,11 +8,27 @@ router.route('/')
         console.log(users)
         return res.send(users)
     })
+    //Create a user
     .post(async (req, res) => {
-        const { mail, password, lastname, firstname, age, gender, phone, city, description, profile_picture } = req.body;
-        const user = await createUser(mail, password, lastname, firstname, age, gender, phone, city, description, profile_picture);
-        console.log(user)
-        return res.send(user);
-    });
+        try {      
+            const userCreated = await createUser(req.body);
+            console.log({userCreated})
+            return res.send(userCreated);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send(error);
+        }
+    })
+
+router.route('/:id')
+.get(async (req, res) => {
+    try {
+      const user = await getUserById(req.params.id);
+      return res.send(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error);
+    }
+  });
 
 module.exports = router
