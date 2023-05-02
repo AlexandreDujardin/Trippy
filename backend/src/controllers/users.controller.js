@@ -19,9 +19,19 @@ const createUser = async (user) => {
     return newUser
   }
 
+const updateUserById = async (userId, user) => {
+    const updateUser = await User.updateUserById(userId, user);
+    return updateUser
+}
+
+const deleteUserById = async (userId, user) => {
+  const updateUser = await User.updateUserById(userId, user);
+  return updateUser
+}
 
 module.exports = {
     getUsers,
     getUserById,
+    updateUserById,
     createUser
 }

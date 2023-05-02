@@ -41,6 +41,32 @@ class User {
       const [result] = await pool.promise().query(sql, [mail, password, lastname, firstname, age, gender, phone, city, description, profile_picture]);
       return { id: result.insertId, ...user };
     }
+
+    static async updateUserById (userId, user) {
+      if (!userId) {
+        throw new Error('Missing ID')
+      }
+      if (!user) {
+        throw new Error('Missing user')
+      }
+      const { 
+          mail: mail, 
+          password: password, 
+          lastname: lastname, 
+          firstname: firstname, 
+          age: age, 
+          gender: gender, 
+          phone: phone, 
+          city: city, 
+          description: description, 
+          profile_picture: profile_picture 
+      } = user
+
+        const updateSql = 'UPDATE user SET ? WHERE id = ?';
+        const [result] = await pool.promise().query(updateSql, [user, userId]);
+        return result.affectedRows > 0;
+    }  
   }
+  
 
   module.exports = User
