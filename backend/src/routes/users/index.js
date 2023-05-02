@@ -1,8 +1,9 @@
 const router = require('express').Router()
-const {getUsers, getUserById, createUser, updateUserById} = require ('../../controllers/users.controller')
+const {getUsers, getUserById, createUser, updateUserById, deleteUserById} = require ('../../controllers/users.controller')
 
-
+// routes for users
 router.route('/')
+    // Get all users
     .get(async (req, res) => {
         const users = await getUsers()
         console.log(users)
@@ -21,7 +22,8 @@ router.route('/')
     })
 
 router.route('/:id')
-.get(async (req, res) => {
+    // Get user by id
+  .get(async (req, res) => {
     try {
       const user = await getUserById(req.params.id);
       return res.send(user);
@@ -46,8 +48,9 @@ router.route('/:id')
   // Delete a user
   .delete(async (req, res) => {
     try {
-      await deleteUserById(req.params.id)
-      return res.send(`User with ID ${req.params.id} as been deleted`)
+      const userId = req.params.id;
+      const result = await deleteUserById(userId)
+      return res.send(result);
     } catch (error) {
       console.error()
       res.status(500).send(error)
