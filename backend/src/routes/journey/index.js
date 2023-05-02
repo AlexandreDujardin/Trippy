@@ -1,19 +1,20 @@
 const router = require('express').Router()
 const {getUsers, getUserById, createUser, updateUserById, deleteUserById} = require ('../../controllers/users.controller')
 
-// routes for users
+// routes for journeys
 router.route('/')
-    // Get all users
+    // Get all journeys
     .get(async (req, res) => {
         const users = await getUsers()
         console.log(users)
         return res.send(users)
     })
-    //Create a user
+    //Create a journey
     .post(async (req, res) => {
         try {      
-            const createdUser = await createUser(req.body);
-            return res.send(createdUser);
+            const userCreated = await createUser(req.body);
+            console.log({userCreated})
+            return res.send(userCreated);
         } catch (error) {
             console.error(error);
             res.status(500).send(error);
@@ -21,7 +22,7 @@ router.route('/')
     })
 
 router.route('/:id')
-    // Get user by id
+    // Get journey by id
   .get(async (req, res) => {
     try {
       const user = await getUserById(req.params.id);
@@ -35,9 +36,9 @@ router.route('/:id')
   .patch(async (req, res) => {
     try {
         const userId = req.params.id;
-        const data = req.body;
-        const updatedUser = await updateUserById(userId, data);
-        return res.send(updatedUser);
+        const updatedUser = req.body;
+        const result = await updateUserById(userId, updatedUser);
+        return res.send(result);
       } catch (error) {
         console.error(error);
         res.status(500).send(error);
@@ -48,8 +49,8 @@ router.route('/:id')
   .delete(async (req, res) => {
     try {
       const userId = req.params.id;
-      const deletedUser = await deleteUserById(userId)
-      return res.send(deletedUser);
+      const result = await deleteUserById(userId)
+      return res.send(result);
     } catch (error) {
       console.error()
       res.status(500).send(error)

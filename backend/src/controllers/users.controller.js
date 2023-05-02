@@ -15,18 +15,18 @@ const getUserById = async (id) => {
 }
 
 const createUser = async (user) => {
-    const newUser = await User.createUser(user);
+    const newUser = await User.createUser(user)
     return newUser
   }
 
-const updateUserById = async (userId, user) => {
-    const updateUser = await User.updateUserById(userId, user);
+const updateUserById = async (id, user) => {
+    const updateUser = await User.updateUserById(id, user)
     return updateUser
 }
 
-const deleteUserById = async (userId) => {
-  const updateUser = await User.deleteUserById(userId);
-  return updateUser
+const deleteUserById = async (id) => {
+  const deleteUser = await User.deleteUserById(id)
+  return deleteUser
 }
 
 module.exports = {

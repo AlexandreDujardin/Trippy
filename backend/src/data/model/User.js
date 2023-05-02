@@ -12,10 +12,6 @@ class User {
         const sql = 'SELECT * FROM user WHERE id = ?';
         const [rows] = await pool.promise().query(sql, [id]);
   
-        if (rows.length === 0) {
-          throw new Error(`User with ID ${id} not found`);
-        }
-  
         return rows[0];
       } catch (err) {
         console.error(`Error getting user by ID: ${err}`);
