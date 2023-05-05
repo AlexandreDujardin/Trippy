@@ -1,4 +1,5 @@
 const pool = require ('../helpers/db')
+const bcrypt = require('bcryptjs');
 
 class User {
     static async getUsers() {
@@ -32,6 +33,7 @@ class User {
         description, 
         profile_picture
       } = user
+      
       const sql = 'INSERT INTO user (mail, password, lastname, firstname, age, gender, phone, city, description, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
   
       const [result] = await pool.promise().query(sql, [mail, password, lastname, firstname, age, gender, phone, city, description, profile_picture]);

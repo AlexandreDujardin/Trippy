@@ -3,19 +3,15 @@ const bcrypt = require('bcryptjs');
 const User = require('../data/model/User');
 
 const register = async (req, res) => { 
-  const isExist = await User.findUserByEmail(req.body.email);
+  const isExist = await User.getUserByEmail(req.body.mail);
   if(isExist) {
       return res.status(400).json({ 
           message: 'Email already exists.' 
       });
   }
-  const hashedPassword = bcrypt.hash(req.body.password);
-  const userData = {
-      name: req.body.name,
-      email: req.body.email,
-      password: hashedPassword
-  }
-  const user = await AuthService.createUser(userData);
+  
+  const userData = req.body
+  const user = await User.createUser(userData);
   return res.json({
       data: user,
       message: 'User registered successfully.'
@@ -38,5 +34,6 @@ const login = async (req, res) =>{
   return res.status(400).json({ message: 'Unauthorized.' });
 }
 module.exports = {
-  login
+  login,
+  register
 };
