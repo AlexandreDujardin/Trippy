@@ -1,4 +1,5 @@
 const pool = require ('../helpers/db')
+const bcrypt = require('bcryptjs');
 
 class User {
     static async getUsers() {
@@ -40,8 +41,8 @@ class User {
       return { id: result.insertId, ...user }
     }
 
-    static async updateUserById (userId, user) {
-      if (!userId) {
+    static async updateUserById (id, user) {
+      if (!id) {
         throw new Error('Missing ID')
       }
       if (!user) {
@@ -62,14 +63,14 @@ class User {
       } = user
 
         const updateSql = 'UPDATE user SET ? WHERE id = ?';
-        const [result] = await pool.promise().query(updateSql, [user, userId]);
-        return { userId: result.insertId, ...user }
+        const [result] = await pool.promise().query(updateSql, [user, id]);
+        return { id: result.insertId, ...user }
     }  
 
-    static async deleteUserById(userId) {
+    static async deleteUserById(id) {
       try {
         const sql = 'DELETE FROM user WHERE id = ?';
-        const [rows] = await pool.promise().query(sql, [userId]);
+        const [rows] = await pool.promise().query(sql, [id]);
   
         if (rows.length === 0) {
           throw new Error(`User with ID ${id} not found`);
@@ -81,6 +82,19 @@ class User {
         throw err;
       }
     }
+
+    static async getUserByEmail(email) {
+      try {
+        const sql = 'SELECT * FROM user WHERE mail = ?';
+        const [rows] = await pool.promise().query(sql, [email]);
+  
+        return rows[0];
+      } catch (err) {
+        console.error(`Error getting user by Email: ${err}`);
+        throw err;
+      }
+    }
+    
   }
   
 
