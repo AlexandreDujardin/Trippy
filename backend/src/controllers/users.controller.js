@@ -24,13 +24,12 @@ const createUser = async (user) => {
   }
 
 const updateUserById = async (id, user) => {
-    const hashedPassword = await bcrypt.hash(user.password, 10);    
-    // const updateUser = await User.updateUserById(id, user)({ 
-    //   ...user, 
-    //   password: hashedPassword 
-    // })
-    const updateUser = await User.updateUserById(id, user)
-    return updateUser
+  if (user.password) {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user = { ...user, password: hashedPassword };
+  }
+  const updateUser = await User.updateUserById(id, user);
+  return updateUser;
 }
 
 const deleteUserById = async (id) => {
