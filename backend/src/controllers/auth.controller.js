@@ -28,15 +28,14 @@ const login = async (req, res) =>{
   const user = await User.getUserByEmail(req.body.mail); 
   console.log(req.body.mail)
   if (user) {
-      if(req.body.password == user.password){
-         const isMatched = true
-         if (isMatched) {
-           return res.status(200).json({ message: 'Connected.' });
-         }
-      }
+    const isMatched = await bcrypt.compare(req.body.password, user.password);
+    if (isMatched) {
+      return res.status(200).json({ message: 'Connected.' });
+    }
   }
   return res.status(400).json({ message: 'Unauthorized.' });
 }
+
 module.exports = {
   login,
   register
