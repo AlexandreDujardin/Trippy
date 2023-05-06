@@ -9,9 +9,13 @@ const register = async (req, res) => {
           message: 'Email already exists.' 
       });
   }
-  
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const userData = req.body
-  const user = await User.createUser(userData);
+  
+  const user = await User.createUser({ 
+    ...userData, 
+    password: hashedPassword 
+  });
   return res.json({
       data: user,
       message: 'User registered successfully.'
