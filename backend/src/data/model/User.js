@@ -4,7 +4,7 @@ class User {
     static async getUsers() {
       const sql = 'SELECT * FROM user';
       const [rows] = await pool.promise().query(sql);
-      return rows[0];
+      return rows;
     }
 
     static async getUserById(id) {
