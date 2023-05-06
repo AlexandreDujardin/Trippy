@@ -20,6 +20,7 @@ class User {
     }
 
     static async createUser(user) {
+      
       const {
         mail, 
         password, 
@@ -32,6 +33,7 @@ class User {
         description, 
         profile_picture
       } = user
+      
       const sql = 'INSERT INTO user (mail, password, lastname, firstname, age, gender, phone, city, description, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
   
       const [result] = await pool.promise().query(sql, [mail, password, lastname, firstname, age, gender, phone, city, description, profile_picture]);
@@ -45,6 +47,7 @@ class User {
       if (!user) {
         throw new Error('Missing user')
       }
+
       const { 
           mail: mail, 
           password: password, 
