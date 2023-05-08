@@ -1,5 +1,6 @@
 const Trip = require('../data/model/Trip')
 
+// Appel des méthodes du modèle Trip
 const getTrips = async () => {
   const trips = await Trip.getTrips()
   return trips

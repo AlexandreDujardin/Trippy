@@ -14,9 +14,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/users', require('./routes/users'))
-// Route auth contenant le login et le register
 app.use('/auth', require('./routes/auth'))
-
 app.use('/trips', require('./routes/trips'))
 
 app.get('/', (req, res) => {

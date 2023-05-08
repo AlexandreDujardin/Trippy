@@ -1,15 +1,16 @@
 const router = require('express').Router()
 const { getUsers, getUserById, createUser, updateUserById, deleteUserById } = require('../../controllers/users.controller')
 
-// routes for users
+// Les routes users
 router.route('/')
-// Get all users
+// Tous les utilisateurs
   .get(async (req, res) => {
+    // Appel au controller
     const users = await getUsers()
     console.log(users)
     return res.send(users)
   })
-// Create a user
+// Création d'un utilisateur
   .post(async (req, res) => {
     try {
       const createdUser = await createUser(req.body)
@@ -21,7 +22,7 @@ router.route('/')
   })
 
 router.route('/:id')
-// Get user by id
+// Un utilisateur par son id
   .get(async (req, res) => {
     try {
       const user = await getUserById(req.params.id)
@@ -31,7 +32,7 @@ router.route('/:id')
       res.status(500).send(error)
     }
   })
-  // Update a user
+// Mise à jour d'un utilisateur
   .patch(async (req, res) => {
     try {
       const userId = req.params.id
@@ -44,7 +45,7 @@ router.route('/:id')
     }
   })
 
-  // Delete a user
+// Suppression d'un utilisateur
   .delete(async (req, res) => {
     try {
       const userId = req.params.id

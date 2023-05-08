@@ -28,7 +28,19 @@ const getTripById = async (id) => {
   }
 }
 
+const login = async (credentials) => {
+  const response = await api.post('auth/local', credentials)
+  return response.data
+}
+
+const register = async (credentials) => {
+  const response = await api.post('auth/local/register', credentials)
+  return response.data
+}
+
 export {
   getTrips,
-  getTripById
+  getTripById,
+  login,
+  register
 }

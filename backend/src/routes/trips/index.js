@@ -1,17 +1,18 @@
 const router = require('express').Router()
 const { getTrips, getTripById } = require('../../controllers/trips.controller')
 
-// routes for journeys
+// // Les routes trips
 router.route('/')
-// Get all journeys
+// Tous les voyages
   .get(async (req, res) => {
+    // Appel au controller
     const trips = await getTrips()
     console.log(trips)
     return res.send(trips)
   })
 
 router.route('/:id')
-// Get journey by id
+// Un voyage par son id
   .get(async (req, res) => {
     try {
       const trip = await getTripById(req.params.id)

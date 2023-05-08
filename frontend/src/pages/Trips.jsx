@@ -7,9 +7,13 @@ function Trip() {
 
   useEffect(() => {
     const getData = async () => {
-      const result = await getTrips()
-      setTrips(result.data)
-    }
+        try {
+          const result = await getTrips();
+          setTrips(result.data)
+        } catch (error) {
+          console.log(error);
+        }
+      };
     getData()
   }, [])
   if (!trips) {

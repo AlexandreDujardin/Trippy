@@ -1,6 +1,7 @@
 const User = require('../data/model/User')
 const bcrypt = require('bcryptjs')
 
+// Appel des méthodes du modèle User
 const getUsers = async () => {
   const users = await User.getUsers()
   return users
