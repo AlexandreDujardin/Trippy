@@ -1,26 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import TripList from '../components/TripList';
+import { getTrips } from '../services/Api';
 
-function Trips () {
-  const [trips, setTrips] = useState()
+function Trip() {
+  const [trips, setTrips] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
-      const result = await getRestaurants()
-      setRestaurants(result.data)
+      const result = await getTrips()
+      setTrips(result.data)
     }
     getData()
   }, [])
-
-  if (!restaurants) {
+  if (!trips) {
     return <h1>Chargement...</h1>
   }
 
   return (
     <>
-      <h1>RESTAURANTS</h1>
-      <RestaurantList restaurants={restaurants} />
+      <h1>VOYAGES</h1>
+      <TripList trips={trips} />
     </>
   )
 }
 
-export default Restaurants
+export default Trip;

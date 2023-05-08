@@ -9,13 +9,7 @@ function Navbar () {
           <Link to='/'>Accueil</Link>
         </li>
         <li>
-          <Link to='/about'>A propos</Link>
-        </li>
-        <li>
-          <Link to='/restaurants'>Restaurants</Link>
-        </li>
-        <li>
-          <Link to='/add-restaurant'>Ajouter un restaurant</Link>
+          <Link to='/trips'>Voyages</Link>
         </li>
         <li>
             <Link to='/auth'>S'inscire / Se connecter</Link>
