@@ -12,6 +12,7 @@ function Trip() {
     }
     getData()
   }, [])
+  console.log(trips)
   if (!trips) {
     return <h1>Chargement...</h1>
   }
