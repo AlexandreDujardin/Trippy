@@ -4,7 +4,7 @@ import TextInput from './TextInput'
 
 function LoginForm ({ onSubmit }) {
   const [credentials, setCredentials] = useState({
-    identifier: 'foo@bar.fr',
+    identifier: 'foo.bar@gmail.com',
     password: 'secret'
   })
 

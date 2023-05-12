@@ -1,15 +1,16 @@
 import { BrowserRouter } from 'react-router-dom'
 import Navbar from './navigation/Navbar'
 import Router from './navigation/Router'
+import { AuthProvider } from './context/AuthContext';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <AuthProvider>
         <Navbar />
         <Router />
-      </BrowserRouter>,
+      </AuthProvider>
     </div>
   );
 }
