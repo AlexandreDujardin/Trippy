@@ -4,11 +4,15 @@ import SubmitButton from './SubmitButton'
 
 function RegisterForm ({ onSubmit }) {
   const [credentials, setCredentials] = useState({
-    username: 'test',
-    email: 'toto@tata.fr',
+    mail: 'toto@tata.fr',
     password: 'secret',
+    lastname: 'tata',
     firstname: 'toto',
-    lastname: 'tata'
+    age: '18',
+    gender: 'female',
+    phone: '0102030405',
+    city: 'Cancun',
+    description: 'test'
   })
 
   const handleChange = (event) => {
@@ -29,20 +33,13 @@ function RegisterForm ({ onSubmit }) {
     <>
       <h2>Inscription</h2>
       <form noValidate onSubmit={handleSubmit}>
-        <TextInput
-          label="Nom d'utilisateur"
-          type='text'
-          name='username'
-          onChange={handleChange}
-          value={credentials.username}
-        />
         <br />
         <TextInput
           label='Email'
           type='email'
-          name='email'
+          name='mail'
           onChange={handleChange}
-          value={credentials.email}
+          value={credentials.mail}
         />
         <br />
         <TextInput
@@ -54,6 +51,14 @@ function RegisterForm ({ onSubmit }) {
         />
         <br />
         <TextInput
+          label='Nom'
+          type='text'
+          name='lastname'
+          onChange={handleChange}
+          value={credentials.lastname}
+        />
+        <br />
+        <TextInput
           label='Prénom'
           type='text'
           name='firstname'
@@ -62,11 +67,43 @@ function RegisterForm ({ onSubmit }) {
         />
         <br />
         <TextInput
-          label='Nom'
-          type='text'
-          name='lastname'
+          label='Age'
+          type='number'
+          name='age'
           onChange={handleChange}
-          value={credentials.lastname}
+          value={credentials.age}
+        />
+        <br />
+        <TextInput
+          label='Genre'
+          type='text'
+          name='gender'
+          onChange={handleChange}
+          value={credentials.gender}
+        />
+        <br />
+        <TextInput
+          label='Téléphone'
+          type='text'
+          name='phone'
+          onChange={handleChange}
+          value={credentials.phone}
+        />
+        <br />
+        <TextInput
+          label='Ville'
+          type='text'
+          name='city'
+          onChange={handleChange}
+          value={credentials.city}
+        />
+        <br />
+        <TextInput
+          label='Description'
+          type='text'
+          name='description'
+          onChange={handleChange}
+          value={credentials.description}
         />
         <br />
         <SubmitButton value='Créer un compte' />

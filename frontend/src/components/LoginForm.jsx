@@ -4,8 +4,8 @@ import TextInput from './TextInput'
 
 function LoginForm ({ onSubmit }) {
   const [credentials, setCredentials] = useState({
-    identifier: 'foo.bar@gmail.com',
-    password: 'secret'
+    mail: 'oki.test@gmail.com',
+    password: 'bi'
   })
 
   const handleChange = (event) => {
@@ -29,9 +29,9 @@ function LoginForm ({ onSubmit }) {
         <TextInput
           label='Email'
           type='email'
-          name='email'
+          name='mail'
           onChange={handleChange}
-          value={credentials.identifier}
+          value={credentials.mail}
         />
         <br />
         <TextInput

@@ -1,4 +1,3 @@
-import { BrowserRouter } from 'react-router-dom'
 import Navbar from './navigation/Navbar'
 import Router from './navigation/Router'
 import { AuthProvider } from './context/AuthContext';

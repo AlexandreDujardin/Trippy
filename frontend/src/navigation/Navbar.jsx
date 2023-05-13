@@ -1,7 +1,9 @@
 import '../styles/Navbar.scss'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 function Navbar () {
+  const { state: { isAuthenticated, user } } = useAuth()
   return (
     <nav>
       <ul>
@@ -12,7 +14,13 @@ function Navbar () {
           <Link to='/trips'>Voyages</Link>
         </li>
         <li>
-            <Link to='/auth'>S'inscire / Se connecter</Link>
+          {
+          isAuthenticated
+            ? <li>Hello, {user.firstname}</li>
+            : (
+              <Link to='/auth'>S'inscire / Se connecter</Link>
+              )
+        }
         </li>
       </ul>
     </nav>

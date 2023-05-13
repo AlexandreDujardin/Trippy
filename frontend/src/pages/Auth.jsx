@@ -24,7 +24,7 @@ function Auth () {
 
   return (
     <>
-      <h1>Authentification</h1>
+      <h1>Authentication</h1>
       {
             isRegister
               ? <RegisterForm onSubmit={handleSubmit} />

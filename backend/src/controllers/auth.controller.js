@@ -27,17 +27,28 @@ const register = async (req, res) => {
 }
 
 // méthode pour se connecter
-const login = async (req, res) => {
-  const user = await User.getUserByEmail(req.body.mail)
-  console.log(req.body.mail)
-  if (user) {
-    // si l'utilisateur existe bien on compare le mot de passe de la db et celui reçu
-    const isMatched = await bcrypt.compare(req.body.password, user.password)
-    if (isMatched) {
-      return res.status(200).json({ message: 'Connected.' })
-    }
+const login = async (credentials, callback) => {
+  let _error
+  if (!credentials.mail || !credentials.password) {
+    _error = 'Invalid credentials - 1'
   }
-  return res.status(400).json({ message: 'Unauthorized.' })
+  const user = await User.getUserByEmail(credentials.mail)
+  if (!user) {
+    _error = 'Invalid credentials - 2'
+    return callback(_error, null)
+  }
+  console.log(user)
+  // si l'utilisateur existe bien on compare le mot de passe de la db et celui reçu
+  const isMatched = await bcrypt.compare(credentials.password, user.password)
+  console.log(isMatched)
+  if (isMatched) {
+    return callback(_error, {
+      user
+    })
+  } else {
+    _error = 'Invalid credentials'
+    return callback(_error, null)
+  }
 }
 
 module.exports = {

@@ -29,12 +29,12 @@ const getTripById = async (id) => {
 }
 
 const login = async (credentials) => {
-  const response = await api.post('auth/local', credentials)
+  const response = await api.post('auth/login', credentials)
   return response.data
 }
 
 const register = async (credentials) => {
-  const response = await api.post('auth/local/register', credentials)
+  const response = await api.post('auth/register', credentials)
   return response.data
 }
 
