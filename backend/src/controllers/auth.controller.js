@@ -1,6 +1,7 @@
 // const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 const User = require('../data/model/User')
+const jwt = require('jsonwebtoken')
 
 // méthode pour s'enregistrer
 const register = async (credentials, callback) => {
@@ -35,13 +36,20 @@ const login = async (credentials, callback) => {
     _error = 'Invalid credentials - 2'
     return callback(_error, null)
   }
-  console.log(user)
   // si l'utilisateur existe bien on compare le mot de passe de la db et celui reçu
   const isMatched = await bcrypt.compare(credentials.password, user.password)
-  console.log(isMatched)
   if (isMatched) {
-    return callback(_error, {
-      user
+    const payload = {
+      id: user.id
+    }
+    jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '7d' }, (error, token) => {
+      if (error) {
+        _error = 'Invalid credentials'
+      }
+      return callback(_error, {
+        user,
+        token
+      })
     })
   } else {
     _error = 'Invalid credentials'
