@@ -3,26 +3,24 @@ const bcrypt = require('bcryptjs')
 const User = require('../data/model/User')
 
 // méthode pour s'enregistrer
-const register = async (req, res) => {
+const register = async (credentials, callback) => {
+  let _error
   // Appel de la méthode getUserByEmail pour comparer si un email existe
-  const isExist = await User.getUserByEmail(req.body.mail)
+  const isExist = await User.getUserByEmail(credentials.mail)
   if (isExist) {
-    return res.status(400).json({
-      message: 'Email already exists.'
-    })
+    _error = 'Email already exists.'
   }
   // hashage du mot de passe avec bcrypt
-  const hashedPassword = await bcrypt.hash(req.body.password, 10)
-  const userData = req.body
+  const hashedPassword = await bcrypt.hash(credentials.password, 10)
+  const userData = credentials
 
   // On remplace le mot de passe par celui hasher
   const user = await User.createUser({
     ...userData,
     password: hashedPassword
   })
-  return res.json({
-    data: user,
-    message: 'User registered successfully.'
+  return callback(_error, {
+    user
   })
 }
 
