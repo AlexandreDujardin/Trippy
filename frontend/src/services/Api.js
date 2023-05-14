@@ -26,8 +26,7 @@ api.interceptors.request.use(
 const getTrips = async () => {
   try {
     const response = await api.get('/trips')
-    console.log(response.data)
-    return response.data
+    return response
   } catch (error) {
     console.error(error)
   }
