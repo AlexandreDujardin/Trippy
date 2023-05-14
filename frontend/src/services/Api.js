@@ -9,6 +9,20 @@ const api = axios.create({
   timeout: 10000
 })
 
+api.interceptors.request.use(
+  config => {
+    const authState = window.localStorage.getItem('AUTH')
+    const auth = JSON.parse(authState)
+    if (auth.user && auth.token) {
+      config.headers.Authorization = `Bearer ${auth.token}`
+    }
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
+
 const getTrips = async () => {
   try {
     const response = await api.get('/trips')

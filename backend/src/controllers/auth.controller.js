@@ -8,21 +8,23 @@ const register = async (credentials, callback) => {
   let _error
   // Appel de la méthode getUserByEmail pour comparer si un email existe
   const isExist = await User.getUserByEmail(credentials.mail)
-  if (isExist) {
-    _error = 'Email already exists.'
-  }
-  // hashage du mot de passe avec bcrypt
-  const hashedPassword = await bcrypt.hash(credentials.password, 10)
-  const userData = credentials
+  if (!isExist) {
+    // hashage du mot de passe avec bcrypt
+    const hashedPassword = await bcrypt.hash(credentials.password, 10)
+    const userData = credentials
 
-  // On remplace le mot de passe par celui hasher
-  const user = await User.createUser({
-    ...userData,
-    password: hashedPassword
-  })
-  return callback(_error, {
-    user
-  })
+    // On remplace le mot de passe par celui hasher
+    const user = await User.createUser({
+      ...userData,
+      password: hashedPassword
+    })
+    return callback(_error, {
+      user
+    })
+  } else {
+    _error = 'Email already exists.'
+    return callback(_error, null)
+  }
 }
 
 // méthode pour se connecter

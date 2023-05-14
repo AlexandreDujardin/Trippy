@@ -16,6 +16,7 @@ app.use(cors())
 app.use('/users', require('./routes/users'))
 app.use('/auth', require('./routes/auth'))
 app.use('/trips', require('./routes/trips'))
+app.use('/protected', require('./routes/protected'))
 
 app.get('/', (req, res) => {
   res.send('Mdrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
