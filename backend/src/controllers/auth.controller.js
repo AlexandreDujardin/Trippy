@@ -1,43 +1,65 @@
-//const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const User = require('../data/model/User');
+// const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
+const User = require('../data/model/User')
+const jwt = require('jsonwebtoken')
 
-const register = async (req, res) => { 
-  const isExist = await User.getUserByEmail(req.body.mail);
-  if(isExist) {
-      return res.status(400).json({ 
-          message: 'Email already exists.' 
-      });
+// méthode pour s'enregistrer
+const register = async (credentials, callback) => {
+  let _error
+  // Appel de la méthode getUserByEmail pour comparer si un email existe
+  const isExist = await User.getUserByEmail(credentials.mail)
+  if (!isExist) {
+    // hashage du mot de passe avec bcrypt
+    const hashedPassword = await bcrypt.hash(credentials.password, 10)
+    const userData = credentials
+
+    // On remplace le mot de passe par celui hasher
+    const user = await User.createUser({
+      ...userData,
+      password: hashedPassword
+    })
+    return callback(_error, {
+      user
+    })
+  } else {
+    _error = 'Email already exists.'
+    return callback(_error, null)
   }
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  const userData = req.body
-  
-  const user = await User.createUser({ 
-    ...userData, 
-    password: hashedPassword 
-  });
-  return res.json({
-      data: user,
-      message: 'User registered successfully.'
-  });
 }
 
-// User authentication function
-const login = async (req, res) =>{
-
-  const user = await User.getUserByEmail(req.body.mail); 
-  console.log(req.body.mail)
-  if (user) {
-      if(req.body.password == user.password){
-         const isMatched = true
-         if (isMatched) {
-           return res.status(200).json({ message: 'Connected.' });
-         }
+// méthode pour se connecter
+const login = async (credentials, callback) => {
+  let _error
+  if (!credentials.mail || !credentials.password) {
+    _error = 'Invalid credentials - 1'
+  }
+  const user = await User.getUserByEmail(credentials.mail)
+  if (!user) {
+    _error = 'Invalid credentials - 2'
+    return callback(_error, null)
+  }
+  // si l'utilisateur existe bien on compare le mot de passe de la db et celui reçu
+  const isMatched = await bcrypt.compare(credentials.password, user.password)
+  if (isMatched) {
+    const payload = {
+      id: user.id
+    }
+    jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '7d' }, (error, token) => {
+      if (error) {
+        _error = 'Invalid credentials'
       }
+      return callback(_error, {
+        user,
+        token
+      })
+    })
+  } else {
+    _error = 'Invalid credentials'
+    return callback(_error, null)
   }
-  return res.status(400).json({ message: 'Unauthorized.' });
 }
+
 module.exports = {
   login,
   register
-};
+}

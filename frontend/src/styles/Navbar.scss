@@ -1,0 +1,27 @@
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #272525;
+}
+
+
+nav li{
+    float: left;    /* effet flottant */
+    height: 36px; /* hauteur */
+    line-height: 33px;  /* interligne */
+    padding: 0 10px; /* marges intérieur */
+    font-size: 15px; /* taille du texte */
+    list-style: none;
+    color: #c5b6b6
+}
+
+nav a {
+    text-decoration: none; /* pas d'héritage avec effet souligné */
+    color: #c5b6b6; /* couleur du texte */
+}
+
+nav a:hover {
+    text-decoration: none; /* pas d'héritage avec effet souligné */
+    color: #52a727; /* couleur du texte */
+}

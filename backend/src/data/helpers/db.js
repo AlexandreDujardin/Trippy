@@ -1,5 +1,6 @@
 const mysql = require('mysql2')
 
+// Connexion avec la base de donnée
 const pool = mysql.createPool({
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
