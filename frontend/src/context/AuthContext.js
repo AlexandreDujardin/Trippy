@@ -15,6 +15,7 @@ const actionTypes = {
 
 const initialState = {
   isAuthenticated: false,
+  token: null,
   user: null,
   loading: false,
   error: null
@@ -25,6 +26,7 @@ const AuthReducer = (state, action) => {
     case actionTypes.LOGIN_SUCCESS:
       return {
         isAuthenticated: true,
+        token: action.data.jwt,
         user: action.data.user,
         loading: false,
         error: null
@@ -37,6 +39,7 @@ const AuthReducer = (state, action) => {
     case actionTypes.REGISTER_SUCCESS:
       return {
         isAuthenticated: true,
+        token: action.data.jwt,
         user: action.data.user,
         loading: false,
         error: null

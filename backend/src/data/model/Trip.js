@@ -20,6 +20,19 @@ class Trip {
       throw err
     }
   }
+
+  static async subscribeToTrip (userId, journeyId) {
+    try {
+      const sql = 'INSERT INTO user_journey (user_id, journey_id) VALUES (?)'
+
+      const [result] = await pool.promise().query(sql, [userId, journeyId])
+      console.log('User subscribed to the journey successfully.')
+      return { id: result.insertId }
+    } catch (err) {
+      console.error(`Error getting user by ID: ${err}`)
+      throw err
+    }
+  }
 }
 
 module.exports = Trip

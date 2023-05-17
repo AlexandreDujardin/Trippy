@@ -7,8 +7,7 @@ import { useAuth } from '../context/AuthContext'
 
 function Router () {
   const { state: { isAuthenticated } } = useAuth()
-  if (isAuthenticated) {
-    return (
+  if (isAuthenticated) {    return (
       <Routes>
         <Route index path='/' element={<Home />} />
         <Route path='/trips' element={<Trips />} />s

@@ -20,6 +20,7 @@ app.use('/protected', require('./routes/protected'))
 
 app.get('/', (req, res) => {
   res.send('Mdrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
+  res.set('Access-Control-Allow-Origin', '*')
 })
 
 app.listen(port, () => {

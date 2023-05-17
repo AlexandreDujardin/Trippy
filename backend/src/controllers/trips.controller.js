@@ -14,7 +14,13 @@ const getTripById = async (id) => {
   return trip
 }
 
+const subscribeToTrip = async (userId, journeyId) => {
+  const newUserSubscribed = await Trip.subscribeToTrip(userId, journeyId)
+  return newUserSubscribed
+}
+
 module.exports = {
   getTrips,
-  getTripById
+  getTripById,
+  subscribeToTrip
 }

@@ -6,6 +6,7 @@ function TripList({ trips }) {
       {trips.map((trip) => (
         <TripListItem key={trip.id} trip={trip} />
       ))}
+      
     </div>
   )
 }
