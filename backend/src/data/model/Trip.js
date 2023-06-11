@@ -23,7 +23,7 @@ class Trip {
 
   static async subscribeToTrip (userId, journeyId) {
     try {
-      const sql = 'INSERT INTO user_journey (user_id, journey_id) VALUES (?)'
+      const sql = 'SELECT id FROM journey JOIN user_journey ON journey_id = user_journey.journey_id WHERE user_journey.user_id = 8;'
 
       const [result] = await pool.promise().query(sql, [userId, journeyId])
       console.log('User subscribed to the journey successfully.')
@@ -32,6 +32,23 @@ class Trip {
       console.error(`Error getting user by ID: ${err}`)
       throw err
     }
+  }
+
+  // On créer le voyage avec les informations donnée
+  static async createTrip (trip) {
+    const {
+      name,
+      dateStart,
+      dateEnd,
+      maxPeople,
+      budget,
+      description
+    } = trip
+
+    const sql = 'INSERT INTO `journey` (name, date_start, date_end, max_people, budget, description) VALUES (?, ?, ?, ?, ?, ?);'
+
+    const [result] = await pool.promise().query(sql, [name, dateStart, dateEnd, maxPeople, budget, description])
+    return { id: result.insertId, ...trip }
   }
 }
 

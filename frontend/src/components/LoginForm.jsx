@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import SubmitButton from './SubmitButton'
 import TextInput from './TextInput'
+import '../styles/Form.scss'
 
 function LoginForm ({ onSubmit }) {
   const [credentials, setCredentials] = useState({
@@ -24,10 +25,10 @@ function LoginForm ({ onSubmit }) {
 
   return (
     <>
-      <h2>Se connecter</h2>
+      <h2>Connexion</h2>
       <form noValidate onSubmit={handleSubmit}>
         <TextInput
-          label='Email'
+          label='email'
           type='email'
           name='mail'
           onChange={handleChange}
@@ -35,7 +36,7 @@ function LoginForm ({ onSubmit }) {
         />
         <br />
         <TextInput
-          label='Mot de passe'
+          label='mot de passe'
           type='password'
           name='password'
           onChange={handleChange}

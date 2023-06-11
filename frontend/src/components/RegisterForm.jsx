@@ -1,39 +1,14 @@
-import { useState } from 'react'
-import TextInput from './TextInput'
-import SubmitButton from './SubmitButton'
+import { useState } from 'react';
+import TextInput from './TextInput';
+import SubmitButton from './SubmitButton';
+import '../styles/Form.scss'
 
-function RegisterForm ({ onSubmit }) {
-  const [credentials, setCredentials] = useState({
-    mail: 'toto@tata.fr',
-    password: 'secret',
-    lastname: 'tata',
-    firstname: 'toto',
-    age: '18',
-    gender: 'female',
-    phone: '0102030405',
-    city: 'Cancun',
-    description: 'test'
-  })
 
-  const handleChange = (event) => {
-    const inputName = event.target.name
-    const inputValue = event.target.value
-    setCredentials({
-      ...credentials,
-      [inputName]: inputValue
-    })
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    onSubmit(credentials)
-  }
-
+function Step1({ credentials, handleChange, nextStep }) {
   return (
     <>
-      <h2>Inscription</h2>
-      <form noValidate onSubmit={handleSubmit}>
-        <br />
+      <form>
+        <h2>Inscription - Étape 1</h2>
         <TextInput
           label='Email'
           type='email'
@@ -50,6 +25,17 @@ function RegisterForm ({ onSubmit }) {
           value={credentials.password}
         />
         <br />
+        <SubmitButton value='Suivant' onClick={nextStep} />
+      </form>
+    </>
+  );
+}
+
+function Step2({ credentials, handleChange, nextStep }) {
+  return (
+    <>
+      <form>
+        <h2>Inscription - Étape 2</h2>
         <TextInput
           label='Nom'
           type='text'
@@ -74,6 +60,17 @@ function RegisterForm ({ onSubmit }) {
           value={credentials.age}
         />
         <br />
+        <SubmitButton value='Suivant' onClick={nextStep} />
+      </form>
+    </>
+  );
+}
+
+function Step3({ credentials, handleChange, onSubmit }) {
+  return (
+    <>
+      <form>
+        <h2>Inscription - Étape 3</h2>
         <TextInput
           label='Genre'
           type='text'
@@ -106,10 +103,62 @@ function RegisterForm ({ onSubmit }) {
           value={credentials.description}
         />
         <br />
-        <SubmitButton value='Créer un compte' />
+        <SubmitButton value='Créer un compte' onClick={onSubmit} />
       </form>
     </>
-  )
+  );
 }
 
-export default RegisterForm
+function RegisterForm({ onSubmit }) {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [credentials, setCredentials] = useState({
+    mail: 'toto@tata.fr',
+    password: 'secret',
+    lastname: 'tata',
+    firstname: 'toto',
+    age: '18',
+    gender: 'female',
+    phone: '0102030405',
+    city: 'Cancun',
+    description: 'test'
+  });
+
+  const handleChange = (event) => {
+    const inputName = event.target.name;
+    const inputValue = event.target.value;
+    setCredentials({
+      ...credentials,
+      [inputName]: inputValue
+    });
+  };
+
+  const nextStep = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmit(credentials);
+  };
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 1:
+        return <Step1 credentials={credentials} handleChange={handleChange} nextStep={nextStep} />;
+      case 2:
+        return <Step2 credentials={credentials} handleChange={handleChange} nextStep={nextStep} />;
+      case 3:
+        return <Step3 credentials={credentials} handleChange={handleChange} onSubmit={handleSubmit} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <>
+      {renderStep()}
+    </>
+  );
+}
+
+export default RegisterForm;

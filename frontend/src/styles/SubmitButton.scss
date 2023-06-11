@@ -1,0 +1,10 @@
+@import './mixins';
+@import './variables';
+
+.submit-btn{
+    @include btn;
+    background-color: #EF7A75;
+    padding: 10px 20px 10px 20px;
+    width: 190px;
+    border-radius: 30px;
+}

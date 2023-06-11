@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { getTrips, getTripById, subscribeToTrip } = require('../../controllers/trips.controller')
+const { getTrips, getTripById, subscribeToTrip, createTrip } = require('../../controllers/trips.controller')
 
 // // Les routes trips
 router.route('/')
@@ -9,6 +9,17 @@ router.route('/')
     const trips = await getTrips()
     console.log(trips)
     return res.send(trips)
+  })
+
+  // Création d'un voyage
+  .post(async (req, res) => {
+    try {
+      const createdTrip = await createTrip(req.body)
+      return res.send(createdTrip)
+    } catch (error) {
+      console.error(error)
+      res.status(500).send(error)
+    }
   })
 
 router.route('/:id')

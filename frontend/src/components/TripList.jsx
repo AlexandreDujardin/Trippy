@@ -1,4 +1,5 @@
 import TripListItem from './TripListItem'
+import '../styles/TripList.scss'
 
 function TripList({ trips }) {
   return (

@@ -1,7 +1,7 @@
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
 import { useAuth } from '../context/AuthContext'
-
+import '../styles/Auth.scss'
 import { useState } from 'react'
 
 function Auth () {
@@ -24,7 +24,6 @@ function Auth () {
 
   return (
     <>
-      <h1>Authentication</h1>
       {
             isRegister
               ? <RegisterForm onSubmit={handleSubmit} />
@@ -34,8 +33,8 @@ function Auth () {
         <a onClick={handleRegisterClick} href=''>
           {
                     isRegister
-                      ? "J'ai déjà un compte"
-                      : "Je n'ai pas de compte"
+                      ? "Vous avez déjà un compte ?"
+                      : "Vous n'avez pas de compte ?"
             }
         </a>
       </div>

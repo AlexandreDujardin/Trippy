@@ -35,7 +35,7 @@ const getTrips = async () => {
 const getTripById = async (id) => {
   try {
     const response = await api.get(`/trips/${id}`)
-    return response.data
+    return response
   } catch (error) {
     console.error(error)
   }
@@ -50,6 +50,15 @@ const subscribeToTrip = async (userId, journeyId) => {
   }
 }
 
+const getUserById = async (id) => {
+  try {
+    const response = await api.get(`/users/:id`, id)
+    return response
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const login = async (credentials) => {
   const response = await api.post('auth/login', credentials)
   return response.data
@@ -60,10 +69,21 @@ const register = async (credentials) => {
   return response.data
 }
 
+const createTrip = async (trip) => {
+  try {
+    const response = await api.post(`/trips`, trip)
+    return response
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export {
   getTrips,
   getTripById,
   login,
   register,
-  subscribeToTrip
+  subscribeToTrip,
+  getUserById,
+  createTrip
 }

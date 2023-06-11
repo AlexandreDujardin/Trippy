@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import TripList from '../components/TripList';
 import { getTrips } from '../services/Api';
 
-function Trip() {
+function Trips() {
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
@@ -30,4 +30,4 @@ function Trip() {
   )
 }
 
-export default Trip;
+export default Trips;
